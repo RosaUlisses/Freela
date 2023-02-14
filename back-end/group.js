@@ -1,4 +1,16 @@
-class Group {
+import {Module} from "./module.js";
+import { get_hours_from_date_string } from "./utils.js";
+
+export const GROUP_INDEX = 0;
+export const MODULE_INDEX = 1;
+export const NUMBER_INDEX = 2;
+export const CLASS_NAME_INDEX = 3;
+export const DURATION_INDEX = 4;
+export const RELEVANCE_INDEX = 5;
+export const START_COLUMN_STUDY_PLAN = 2;
+export const NUMBER_OF_COLUMNS = 6;
+
+export class Group {
     constructor() {
       this.modules_map = new Map();
       this.modules_sorted_list = [];

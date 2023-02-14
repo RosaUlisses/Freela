@@ -1,4 +1,15 @@
-class Module {
+import {get_hours_from_date_string} from "./utils.js";
+
+export const GROUP_INDEX = 0;
+export const MODULE_INDEX = 1;
+export const NUMBER_INDEX = 2;
+export const CLASS_NAME_INDEX = 3;
+export const DURATION_INDEX = 4;
+export const RELEVANCE_INDEX = 5;
+export const START_COLUMN_STUDY_PLAN = 2;
+export const NUMBER_OF_COLUMNS = 6;
+
+export class Module {
     constructor() {
       this.classes = [];
     }
@@ -37,7 +48,12 @@ class Module {
         let [a_relevance, b_relevance] = [a[RELEVANCE_INDEX], b[RELEVANCE_INDEX]];
         if(a_relevance > b_relevance) return 1;
         if(a_relevance < b_relevance) return -1;
+
+        let [a_number, b_number] = [a[NUMBER_INDEX, b[NUMBER_INDEX]]];
+        if(a_number < b_number) return 1;
+        if(a_number > b_number) return -1;
+
         return 0;
-      })
+      });
     }
   }

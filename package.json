@@ -1,0 +1,20 @@
+{
+  "name": "freela",
+  "version": "1.0.0",
+  "description": "Freela Vivi",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "type" : "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RosaUlisses/Freela.git"
+  },
+  "author": "Ulisses Rosa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RosaUlisses/Freela/issues"
+  },
+  "homepage": "https://github.com/RosaUlisses/Freela#readme"
+}

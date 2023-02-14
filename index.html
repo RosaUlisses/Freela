@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <base target="_top">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/ bootstrap-datepicker.min.css">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+        
+        <style>
+
+          #disciplina{
+            border:none;
+            font-family:georgia;
+          }
+          form-group row{
+            font-size:georgia;
+          }
+          container{
+            display: flex;
+            flex-wrap: wrap;
+          }
+          </style>
+
+
+        <!--##JAVASCRIPT FUNCTIONS ~ END ---------------------------------------------------- -->
+    </head>
+    <body style="background-color:black; font-family: sans-serif">
+      <header id="header" class="header" style="background-color:#FFD700">
+        <div class="container">
+          <div class="headertop">
+            <div class="topline">
+              <div class="logo">
+                <div class="logomarca">
+                  <a href="https://www.terranegraonline.com.br">
+                    <img src="https://www.plataformadoterra.com.br/images/logo.png" alt="logo" style="height:66px">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="planner" style="background-color:white">
+          <div class="container">
+            <div class="eco_nav hide_xs">
+              <legend class="plannertext" style="color:gray; text-align:center; font-weight:bold; font-family: montserrat, sans-serif; font-size: 18px">PLANNER</legend>
+            </div>
+          </div>
+        </div>
+      </header>
+        <div class="container"> <!--SITE-->
+            <br>
+            <div class="row">  <!--CONTEÚDO-->
+              <div class="col-6" style="float:left; max-width:300px; margin-left:25px" > <!--ESQUERDA-->
+             
+                  <!-- ## SEARCH FORM ------------------------------------------------ -->
+         
+      
+              <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0" style="color:gold; font-family:montserrat, sans-serif; font-size: 19px">SELECIONE A DISCIPLINA:</legend>
+                  <div class="col-sm-10" style="height:100px">
+                    <div class="form-check" >
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="Geografia" checked>
+                      <label class="form-check-label" style="color:white; font-family:montserrat, sans-serif; font-size: 16px" for="gridRadios1">
+                      GEOGRAFIA
+                      </label>
+                    </div>
+
+                    <div class="form-check" style="color:white;font-family:montserrat, sans-serif; font-size: 16px">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="História" >
+                      <label class="form-check-label" for="gridRadios2">
+                      HISTÓRIA
+                      </label>
+                    </div>
+
+                    <div class="form-check" style="color:white;font-family:montserrat, sans-serif; font-size: 16px">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="Filosofia" >
+                      <label class="form-check-label" for="gridRadios3">
+                      FILOSOFIA
+                      </label>
+                    </div>
+
+                    <div class="form-check" style="color:white;font-family:montserrat, sans-serif; font-size: 16px">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadio3" value="Sociologia" >
+                      <label class="form-check-label" for="gridRadios3">
+                      SOCIOLOGIA
+                      </label>
+                    </div>
+    
+                  </div>
+              <div class="form-group row" style="height:85px">
+                      <label for="horassemanais" class="col-sm-2 col-form-label" style="color:gold; font-family:montserrat, sans-serif; font-size: 18px">QUANTAS HORAS POR SEMANA PARA A DISCIPLINA</label>
+                    <div class="col-sm-10">
+                      <input type="text" inputmode="numeric" class="form-control" id="horas" placeholder="DIGITE AS HORAS DISPONÍVEIS" style="height:25px; width:280px; border-radius:7px; font-family:montserrat, sans-serif">
+                    </div>
+                </div>
+                <div class="form-group row" style="height:82px">
+                  <label for="semanas" class="col-sm-2 col-form-label" style="color:gold; font-family:montserrat, sans-serif; font-size: 18px">QUANTAS SEMANAS PARA ESTA DISCIPLINA?</label>
+                    <div class="col-sm-10">
+                      <input type="text" style="height:25px; width:280px; border-radius:7px; font-family:montserrat, sans-serif" inputmode="numeric" class="form-control" id="semanas" placeholder="DIGITE O NÚMERO DE SEMANAS">
+                    </div>
+                </div>
+
+                <br>
+      
+              <div class="form-group row" style="height:70px">
+                <div class="col-sm-10">
+                  <button type="clean" class="btn btn-primary" style="blackground-color:gray; border-radius:10px; height: 25px; width:280px; font-family: montserrat, sans-serif; font-size: 15px; cursor:pointer; margin-left: 3px" onclick="clear_table()">LIMPAR</button>
+                </div>
+                <br>
+                <div class="col-sm-10">
+                  <button type="submit" class="btn btn-primary" style="background-color:gold; border-radius: 10px; height: 25px; width:280px; margin-left:3px; font-family:montserrat, sans-serif; font-size:15px; cursor: pointer" onclick="fill_table()">MONTAR PLANO</button>
+                </div>
+              </div>
+              
+               
+              </div>    
+            </div>
+      
+                  
+          <div class="conteudo-right" id = "id1" style = "float:left; overflow-x:auto"> <!--DIREITA-->
+                <div class="row">
+                  <legend class="semanas_horas" id="table-title" style="font-family:montserrat, sans-serif; color:gold; margin-left: 350px"> </legend>
+                </div>
+              
+                 <!-- ## TABLE OF SEARCH RESULTS ------------------------------------------------ -->
+                <div id="search-results" class="table-responsive" align="center" style="margin-left:80px">
+                  <table border="2" id="table" style="border-color: gray" >
+                      <tr id="linha1">
+                        <th style="width: 120px; color:gold; font-size: 18px; font-family:montserrat, sans-serif">FRENTE</th>
+                        <th style="width: 120px; color:gold; font-size: 18px; font-family:montserrat, sans-serif">MÓDULO</th>
+                        <th style="width: 120px; color:gold; font-size: 18px; font-family:montserrat, sans-serif">NÚMERO</th>
+                        <th style="width: 500px; color:gold; font-size: 18px; font-family:montserrat, sans-serif">TEMA</th>
+                        <th style="width: 120px; color:gold; font-size: 18px; font-family:montserrat, sans-serif">DURAÇÃO</th>
+                        <th style="width: 120px; color:gold; font-size: 18px; font-family:montserrat, sans-serif">RELEVÂNCIA</th>
+                      </tr>
+                  </table>
+                </div>
+                <!-- ## TABLE OF SEARCH RESULTS ~ END ------------------------------------------------ -->
+          </div>
+        </div>
+    <script>
+
+      const CSS_TEXT_FOR_TABLE_HEADER = "color:gold; font-size: 18px; font-family:montserrat, sans-serif";
+      const CSS_TEXT_FOR_TABLE_DATA = "color:white; font-size: 18px; font-family:montserrat, sans-serif";
+
+      function clear_outputs() {
+        document.getElementById("semanas").value = "";
+        document.getElementById("horas").value = "";
+      }
+
+      function handle_table_data(study_plan_data) {
+        let study_plan_table = document.getElementById("table");
+  
+        study_plan_data.forEach((classes, week) => {
+          let week_data = document.createElement("tr");
+          week_data.style.cssText = CSS_TEXT_FOR_TABLE_HEADER;
+          week_data.innerHTML = `Semana ${week + 1}`;
+          study_plan_table.appendChild(week_data);
+          study_plan_table.appendChild(document.createElement("tr"));
+
+          classes.forEach((class_) => {
+            let table_row = document.createElement("tr");
+            class_.forEach((value) => {
+              let table_data = document.createElement("td");
+              table_data.style.cssText = CSS_TEXT_FOR_TABLE_DATA;
+              table_data.innerHTML = value;
+              table_row.appendChild(table_data);
+            });
+            study_plan_table.appendChild(table_row);
+          });
+        });
+      }
+
+      function get_selected_subject() {
+        if(document.getElementById("gridRadios1").checked) return "Geografia";
+        if(document.getElementById("gridRadios2").checked) return "História";
+        if(document.getElementById("gridRadios1").checked) return "Filosofia";
+        return "Sociologia";
+      }
+
+      function get_number_of_weeks() {
+        let string_value = document.getElementById("semanas").value;
+        let number = Number.parseInt(string_value);
+        if(isNaN(number)) {
+          alert("ERRO. O INPUT DE NÚMERO DE SEMANAS DEVE SER PREENCHIDO COM UM NÚMERO !!!!");
+          document.getElementById("semanas").value = "";
+        }
+        if(number == 0) {
+          alert("INPUT INVALIDO !!!!");
+          document.getElementById("semanas").value = "";
+        }
+        return number;
+      }
+
+      function get_number_of_hours_per_week(){
+        let string_value = document.getElementById("horas").value;
+        let number = Number.parseInt(string_value);
+        if(isNaN(number)) {
+          alert("ERRO. O INPUT DE NÚMERO DE HORAS DEVE SER PREENCHIDO COM UM NÚMERO !!!!");
+          document.getElementById("horas").value = "";
+        }
+        if(number == 0) {
+          alert("INPUT INVALIDO !!!!");
+          document.getElementById("semanas").value = "";
+        }
+        return number;
+      }
+
+      function fill_table() {
+        let subject = get_selected_subject();
+        let number_of_weeks = get_number_of_weeks();
+        let hours_per_week = get_number_of_hours_per_week();
+        let study_plan_table = document.getElementById("table");
+        if(number_of_weeks == undefined || number_of_weeks == 0 || hours_per_week == undefined || hours_per_week == 0) return;
+        google.script.run.withSuccessHandler(handle_table_data).create_plan(subject, number_of_weeks, hours_per_week);
+      }
+
+      function clear_table() {
+        let study_plan_table = document.getElementById("table");
+        while (study_plan_table.childNodes.length > 2) {
+          study_plan_table.removeChild(study_plan_table.lastElementChild);
+        }
+        clear_outputs();
+      }
+      
+    </script>
+    </body>
+</html>
