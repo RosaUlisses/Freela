@@ -1,11 +1,5 @@
 let CSV_TEXT = undefined;
 
-function sort_weekly_classes(weekly_classes_list) {
-    weekly_classes_list.sort((a, b) => {
-        let [a_group, b_group] = [a[GROUP_INDEX], b[GROUP_INDEX]];
-    })
-}
-
 function is_valid_date(date) {
     return date instanceof Date && !isNaN(date);
 }
@@ -51,7 +45,7 @@ function format_date_string(date_string) {
 function format_all_dates_of_the_study_plan(study_plan) {
     study_plan.forEach((classes) => {
         classes.forEach((class_) => {
-            class_[DURATION_INDEX] = format_date_string(class_[DURATION_INDEX]);
+            class_.duration = format_date_string(class_.duration);
         });
     });
 }
@@ -71,8 +65,8 @@ async function get_hours_of_study(csv_path, min_relevance) {
 
 async function read_file(url) {
     if(CSV_TEXT !== undefined) return CSV_TEXT;
-    const response = await fetch(url)
-        .then(x => x.text());
+    const text = await fetch(url)
+        .then(response => response.text());
 
-    CSV_TEXT = response;
+    CSV_TEXT = text;
 }

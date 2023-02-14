@@ -5,7 +5,7 @@ class Group {
     }
 
     add_class(class_) {
-        let module = class_[MODULE_INDEX];
+        let module = class_.module;
         if (!this.modules_map.has(module)) {
             this.modules_map.set(module, new Module());
         }
@@ -57,7 +57,7 @@ class Group {
             }
             classes.forEach((class_) => {
                 weekly_classes.push(class_);
-                current_workload += get_hours_from_date_string(class_[DURATION_INDEX]);
+                current_workload += get_hours_from_date_string(class_.duration);
             });
             if (classes.length == 1 && previous_last_index == last_index) break;
         }

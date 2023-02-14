@@ -14,7 +14,7 @@ class Module {
         let last_index = this.classes.length - 1;
         while (true) {
             if (this.classes.length == 0) return weekly_classes;
-            let duration_in_hours = get_hours_from_date_string(this.classes[last_index][DURATION_INDEX]);
+            let duration_in_hours = get_hours_from_date_string(this.classes[last_index].duration);
 
             hours_of_study += duration_in_hours;
 
@@ -34,14 +34,10 @@ class Module {
 
     sort() {
         this.classes.sort((a, b) => {
-            let [a_relevance, b_relevance] = [a[RELEVANCE_INDEX], b[RELEVANCE_INDEX]];
-            if (a_relevance > b_relevance) return 1;
-            if (a_relevance < b_relevance) return -1;
-
-            let [a_number, b_number] = [a[NUMBER_INDEX, b[NUMBER_INDEX]]];
-            if (a_number < b_number) return 1;
-            if (a_number > b_number) return -1;
-
+            if (a.relevance > b.relevance) return 1;
+            if (a.relevance < b.relevance) return -1;
+            if (a.number < b.number) return 1;
+            if (a.number > b.number) return -1;
             return 0;
         });
     }

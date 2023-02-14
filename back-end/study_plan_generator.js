@@ -1,16 +1,3 @@
-// import {construct_class, is_class} from "./class_.js";
-// import {Group} from "./group.js";
-// import {read_file, get_hours_of_study} from "./utils.js";
-// import {format_all_dates_of_the_study_plan} from "./utils.js";
-const GROUP_INDEX = 0;
-const MODULE_INDEX = 1;
-const NUMBER_INDEX = 2;
-const CLASS_NAME_INDEX = 3;
-const DURATION_INDEX = 4;
-const RELEVANCE_INDEX = 5;
-const START_COLUMN_STUDY_PLAN = 2;
-const NUMBER_OF_COLUMNS = 6;
-
 async function create_plan(subject, number_of_weeks, hours_per_week) {
     let csv_path;
     if (subject === "Geografia") csv_path = "https://raw.githubusercontent.com/RosaUlisses/Freela/main/back-end/Csvs/Geografia.csv";
@@ -24,6 +11,7 @@ async function create_plan(subject, number_of_weeks, hours_per_week) {
 async function generate_study_plan(csv_path, number_of_weeks, hours_per_week) {
     let study_plan_data = await get_study_plan_data(csv_path, number_of_weeks, hours_per_week);
     format_all_dates_of_the_study_plan(study_plan_data);
+    console.log(study_plan_data);
     return study_plan_data;
 }
 
@@ -46,6 +34,8 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
         study_plan.push(weekly_classes);
     }
 
+    console.log(study_plan);
+
     return study_plan;
 }
 
@@ -65,12 +55,13 @@ async function read_data_of_csv_file(path, min_relevance) {
     await read_file(path);
     let file_content = CSV_TEXT.split("\n");
     let groups = new Map();
-    let number_of_rows = file_content.length;
 
     file_content.forEach((line) => {
-        let class_ = construct_class(line);
-        if (!is_class(class_) || class_[RELEVANCE_INDEX] < min_relevance) return;
-        let group = line[GROUP_INDEX];
+        line = construct_class(line); 
+        if (!is_class(line) || line[RELEVANCE_INDEX] < min_relevance) return;
+        let class_ = new Class(line[GROUP_INDEX], line[MODULE_INDEX], 
+            line[NUMBER_INDEX], line[CLASS_NAME_INDEX], line[DURATION_INDEX], line[RELEVANCE_INDEX]);
+        let group = class_.group;
         if (!groups.has(group)) {
             groups.set(group, new Group());
         }
