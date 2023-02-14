@@ -93,6 +93,7 @@ function fill_table() {
     let hours_per_week = get_number_of_hours_per_week();
     let study_plan_table = document.getElementById("table");
     if (!number_of_weeks || !hours_per_week) return;
+    clear_study_plan();
     fill_table_title(subject);
     create_plan(subject, number_of_weeks, hours_per_week)
         .then(study_plan => save_study_plan_data(study_plan));
@@ -103,7 +104,7 @@ function clear_inputs() {
     document.getElementById("horas").value = "";
 }
 
-function clear_table() {
+function clear_study_plan() {
     let table_title = document.getElementById("table-title");
     table_title.innerHTML = "";
 
@@ -111,7 +112,10 @@ function clear_table() {
     while (study_plan_table.childNodes.length > 2) {
         study_plan_table.removeChild(study_plan_table.lastElementChild);
     }
+}
 
+function clear_table() {
+    clear_study_plan(); 
     clear_inputs();
 }
 
