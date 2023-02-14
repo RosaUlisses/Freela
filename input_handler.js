@@ -89,6 +89,9 @@ function get_number_of_hours_per_week() {
 
 function fill_table() {
     let subject = get_selected_subject();
+    if(subject == undefined) {
+        alert("Escolha uma disciplina.");
+    }
     let number_of_weeks = get_number_of_weeks();
     let hours_per_week = get_number_of_hours_per_week();
     let study_plan_table = document.getElementById("table");
