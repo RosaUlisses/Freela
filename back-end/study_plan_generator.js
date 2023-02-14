@@ -1,37 +1,36 @@
-import {construct_class, is_class} from "./class_.js";
-import {Group} from "./group.js";
-import {read_file, get_hours_of_study} from "./utils.js";
-import {format_all_dates_of_the_study_plan} from "./utils.js";
+// import {construct_class, is_class} from "./class_.js";
+// import {Group} from "./group.js";
+// import {read_file, get_hours_of_study} from "./utils.js";
+// import {format_all_dates_of_the_study_plan} from "./utils.js";
+const GROUP_INDEX = 0;
+const MODULE_INDEX = 1;
+const NUMBER_INDEX = 2;
+const CLASS_NAME_INDEX = 3;
+const DURATION_INDEX = 4;
+const RELEVANCE_INDEX = 5;
+const START_COLUMN_STUDY_PLAN = 2;
+const NUMBER_OF_COLUMNS = 6;
 
-export const GROUP_INDEX = 0;
-export const MODULE_INDEX = 1;
-export const NUMBER_INDEX = 2;
-export const CLASS_NAME_INDEX = 3;
-export const DURATION_INDEX = 4;
-export const RELEVANCE_INDEX = 5;
-export const START_COLUMN_STUDY_PLAN = 2;
-export const NUMBER_OF_COLUMNS = 6;
-
-function create_plan(subject, number_of_weeks, hours_per_week) {
+async function create_plan(subject, number_of_weeks, hours_per_week) {
     let csv_path;
-    if (subject == "Geografia") csv_path = "./Csvs/Geografia.csv"
-    if (subject == "História") csv_path = "./Csvs/Historia.csv"
-    if (subject == "Filosofia") csv_path = "./Csvs/Filosofia.csv"
-    if (subject == "Sociologia") csv_path = "./Csvs/Filosofia.csv"
+    if (subject === "Geografia") csv_path = "https://raw.githubusercontent.com/RosaUlisses/Freela/main/back-end/Csvs/Geografia.csv";
+    if (subject === "História") csv_path = "https://raw.githubusercontent.com/RosaUlisses/Freela/main/back-end/Csvs/Historia.csv";
+    if (subject === "Filosofia") csv_path = "https://raw.githubusercontent.com/RosaUlisses/Freela/main/back-end/Csvs/Sociologia.csv";
+    if (subject === "Sociologia") csv_path = "https://raw.githubusercontent.com/RosaUlisses/Freela/main/back-end/Csvs/Filosofia.csv";
 
-    return generate_study_plan(csv_path, number_of_weeks, hours_per_week);
+    return await generate_study_plan(csv_path, number_of_weeks, hours_per_week);
 }
 
-export function generate_study_plan(csv_path, number_of_weeks, hours_per_week) {
-    let min_relevance = calculate_min_relevance(csv_path, number_of_weeks, hours_per_week);
-    let study_plan_data = get_study_plan_data(csv_path, number_of_weeks, hours_per_week);
+async function generate_study_plan(csv_path, number_of_weeks, hours_per_week) {
+    let study_plan_data = await get_study_plan_data(csv_path, number_of_weeks, hours_per_week);
     format_all_dates_of_the_study_plan(study_plan_data);
     return study_plan_data;
 }
 
-function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
+async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
     let study_plan = []
-    let groups = read_data_of_csv_file(csv_path, 0);
+    let min_relevance = await calculate_min_relevance(csv_path, number_of_weeks, hours_per_week);
+    let groups = await read_data_of_csv_file(csv_path, min_relevance);
 
     let number_of_groups = groups.size;
     let hours_per_group = hours_per_week / number_of_groups;
@@ -51,23 +50,20 @@ function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
 }
 
 
-function calculate_min_relevance(sheet, number_of_weeks, hours_per_week) {
+async function calculate_min_relevance(sheet, number_of_weeks, hours_per_week) {
     let hours_of_study = number_of_weeks * hours_per_week;
 
-    if (hours_of_study > get_hours_of_study(sheet, 0)) return 0;
-    if (hours_of_study > get_hours_of_study(sheet, 1)) return 1;
-    if (hours_of_study > get_hours_of_study(sheet, 2)) return 2;
-    if (hours_of_study > get_hours_of_study(sheet, 3)) return 3;
-    if (hours_of_study > get_hours_of_study(sheet, 4)) return 4;
-    if (hours_of_study > get_hours_of_study(sheet, 5)) return 5;
-
-    // TODO -> Levantar quando chegar excecao aqui;
+    if (hours_of_study > await get_hours_of_study(sheet, 0)) return 0;
+    if (hours_of_study > await get_hours_of_study(sheet, 1)) return 1;
+    if (hours_of_study > await get_hours_of_study(sheet, 2)) return 2;
+    if (hours_of_study > await get_hours_of_study(sheet, 3)) return 3;
+    if (hours_of_study > await get_hours_of_study(sheet, 4)) return 4;
+    if (hours_of_study > await get_hours_of_study(sheet, 5)) return 5;
 }
 
-export function read_data_of_csv_file(path, min_relevance) {
-    // TODO -> CHAMAR A FUNCAO QUE CALCULA MIN RELEVANCE AQUI
-    let file_content = read_file(path).split("\n");
-
+async function read_data_of_csv_file(path, min_relevance) {
+    await read_file(path);
+    let file_content = CSV_TEXT.split("\n");
     let groups = new Map();
     let number_of_rows = file_content.length;
 
