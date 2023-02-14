@@ -33,17 +33,30 @@ function save_study_plan_data(study_plan_data) {
             put_value_in_table_row(table_row, class_.number); 
             put_value_in_table_row(table_row, class_.name); 
             put_value_in_table_row(table_row, class_.duration); 
-            put_value_in_table_row(table_row, class_.relevance); 
             study_plan_table.appendChild(table_row);
         });
     });
 }
 
 function get_selected_subject() {
-    if (document.getElementById("gridRadios1").checked) return "Geografia";
-    if (document.getElementById("gridRadios2").checked) return "História";
-    if (document.getElementById("gridRadios3").checked) return "Filosofia";
-    return "Sociologia";
+
+    if (document.getElementById("gridRadios1").checked) {
+        document.getElementById("gridRadios1").checked = false;
+        return "Geografia";
+    }
+    if (document.getElementById("gridRadios2").checked) {
+        document.getElementById("gridRadios2").checked = false;
+        return "História";
+    } 
+    if (document.getElementById("gridRadios3").checked) {
+        document.getElementById("gridRadios3").checked = false;
+        return "Filosofia";
+    } 
+    if (document.getElementById("gridRadios4").checked) {
+        document.getElementById("gridRadios4").checked = false;
+        return "Sociologia";
+    }
+
 }
 
 function get_number_of_weeks() {

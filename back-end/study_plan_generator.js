@@ -17,6 +17,7 @@ async function generate_study_plan(csv_path, number_of_weeks, hours_per_week) {
 
 async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
     let study_plan = []
+    CSV_TEXT = undefined;
     let min_relevance = await calculate_min_relevance(csv_path, number_of_weeks, hours_per_week);
     let groups = await read_data_of_csv_file(csv_path, min_relevance);
 
