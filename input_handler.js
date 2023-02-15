@@ -22,6 +22,7 @@ function put_value_in_table_row(table_row, value) {
 }
 
 function save_study_plan_data(study_plan_data) {
+    console.log(study_plan_data);
     let study_plan_table = document.getElementById("table");
 
     study_plan_data.forEach((classes, week) => {

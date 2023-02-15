@@ -62,6 +62,10 @@ async function read_data_of_csv_file(path, min_relevance) {
         if (!is_class(line) || line[RELEVANCE_INDEX] < min_relevance) return;
         let class_ = new Class(line[GROUP_INDEX], line[MODULE_INDEX], 
             line[NUMBER_INDEX], line[CLASS_NAME_INDEX], line[DURATION_INDEX], line[RELEVANCE_INDEX]);
+        if(class_.name.includes("Unidades")) {
+            console.log(line);
+            console.log(class_);
+        }    
         let group = class_.group;
         if (!groups.has(group)) {
             groups.set(group, new Group());
