@@ -9,7 +9,7 @@ function fill_table_title(subject) {
 function put_week_row_in_table(table, week_number) {
     let week_data = document.createElement("tr");
     week_data.style.cssText = CSS_TEXT_FOR_TABLE_HEADER;
-    week_data.innerHTML = `Semana ${week_number + 1}`;
+    week_data.innerHTML = `\t\t\t\t\t\t\t\t\tSemana ${week_number + 1}`;
     table.appendChild(week_data);
     table.appendChild(document.createElement("tr"));
 }
@@ -23,18 +23,18 @@ function put_value_in_table_row(table_row, value) {
 
 function save_study_plan_data(study_plan_data) {
     console.log(study_plan_data);
-    let study_plan_table = document.getElementById("table");
+    let study_plan_table = document.getElementById("table-body");
 
     study_plan_data.forEach((classes, week) => {
         if(classes.length != 0) put_week_row_in_table(study_plan_table, week);
         classes.forEach((class_) => {
             let table_row = document.createElement("tr");
+            table_row.appendChild(document.createElement("td"));
             put_value_in_table_row(table_row, class_.group); 
             put_value_in_table_row(table_row, class_.module); 
             put_value_in_table_row(table_row, class_.number); 
             put_value_in_table_row(table_row, class_.name); 
             put_value_in_table_row(table_row, class_.duration); 
-            put_value_in_table_row(table_row, class_.relevance); 
             study_plan_table.appendChild(table_row);
         });
     });
@@ -96,8 +96,8 @@ function fill_table() {
     }
     let number_of_weeks = get_number_of_weeks();
     let hours_per_week = get_number_of_hours_per_week();
-    let study_plan_table = document.getElementById("table");
-    if (!number_of_weeks || !hours_per_week) return;
+    let study_plan_table = document.getElementById("table-body");
+    if (!number_of_weeks || !hours_per_week || !subject) return;
     clear_study_plan();
     fill_table_title(subject);
     create_plan(subject, number_of_weeks, hours_per_week)
@@ -113,7 +113,7 @@ function clear_study_plan() {
     let table_title = document.getElementById("table-title");
     table_title.innerHTML = "";
 
-    let study_plan_table = document.getElementById("table");
+    let study_plan_table = document.getElementById("table-body");
     while (study_plan_table.childNodes.length > 2) {
         study_plan_table.removeChild(study_plan_table.lastElementChild);
     }

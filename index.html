@@ -11,6 +11,9 @@
         <script src="./back-end/module.js"></script>
         <script src="./back-end/study_plan_generator.js"></script>
         <script src="./back-end/utils.js"></script>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
+        <title>Planner - Terra Negra</title>
     </head>
     <body style="background-color:black; font-family: sans-serif">
       <header id="header" class="header" style="background-color:#FFD700">
@@ -114,15 +117,20 @@
               
                  <!-- ## TABLE OF SEARCH RESULTS ------------------------------------------------ -->
                 <div id="search-results" class="table-responsive" align="center" style="margin-left:80px">
-                  <table border="2" id="table" style="border-color: gray" >
+                  <table class="table" style="border-color: gray" >
+                    <thread>
                       <tr id="linha1">
-                        <th style="width: 120px; color:gold; font-size: 18px; font-family:montserrat, sans-serif">FRENTE</th>
-                        <th style="width: 120px; color:gold; font-size: 18px; font-family:montserrat, sans-serif">MÓDULO</th>
-                        <th style="width: 120px; color:gold; font-size: 18px; font-family:montserrat, sans-serif">NÚMERO</th>
-                        <th style="width: 500px; color:gold; font-size: 18px; font-family:montserrat, sans-serif">TEMA</th>
-                        <th style="width: 120px; color:gold; font-size: 18px; font-family:montserrat, sans-serif">DURAÇÃO</th>
-                        <th style="width: 120px; color:gold; font-size: 18px; font-family:montserrat, sans-serif">RELEVANCIA</th>
-                      </tr>
+                          <th style="width: 120px;"></th>
+                          <th style="width: 120px;">FRENTE</th>
+                          <th style="width: 120px;">MÓDULO</th>
+                          <th style="width: 120px;">NÚMERO</th>
+                          <th style="width: 500px;">TEMA</th>
+                          <th style="width: 120px;">DURAÇÃO</th>
+                        </tr>
+                    </thread>
+                    <tbody id="table-body">
+
+                    </tbody>
                   </table>
                 </div>
                 <!-- ## TABLE OF SEARCH RESULTS ~ END ------------------------------------------------ -->

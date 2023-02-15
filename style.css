@@ -1,0 +1,12 @@
+th {
+    color:gold; 
+    font-size: 18px; 
+    font-family: montserrat, sans-serif;
+    margin: auto;
+    text-align: center;
+}
+
+td {
+    margin: auto;
+    text-align: center;
+}

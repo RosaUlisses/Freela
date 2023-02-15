@@ -11,6 +11,8 @@
         <script src="./back-end/module.js"></script>
         <script src="./back-end/study_plan_generator.js"></script>
         <script src="./back-end/utils.js"></script>
+        <meta charset="utf-8">
+        <title>Planner - Terra Negra</title>
     </head>
     <body style="background-color:black; font-family: sans-serif">
       <header id="header" class="header" style="background-color:#FFD700">
@@ -94,11 +96,11 @@
       
               <div class="form-group row" style="height:70px">
                 <div class="col-sm-10">
-                  <button type="clean" class="btn btn-primary" style="blackground-color:gray; border-radius:10px; height: 25px; width:280px; font-family: montserrat, sans-serif; font-size: 15px; cursor:pointer; margin-left: 3px" onclick="clear_table()">LIMPAR</button>
+                  <button type="submit" class="btn btn-primary" style="background-color:gold; border-radius: 10px; height: 25px; width:280px; margin-left:3px; font-family:montserrat, sans-serif; font-size:15px; cursor: pointer" onclick="fill_table()">MONTAR PLANO</button>
                 </div>
                 <br>
                 <div class="col-sm-10">
-                  <button type="submit" class="btn btn-primary" style="background-color:gold; border-radius: 10px; height: 25px; width:280px; margin-left:3px; font-family:montserrat, sans-serif; font-size:15px; cursor: pointer" onclick="fill_table()">MONTAR PLANO</button>
+                  <button type="clean" class="btn btn-primary" style="blackground-color:gray; border-radius:10px; height: 25px; width:280px; font-family: montserrat, sans-serif; font-size: 15px; cursor:pointer; margin-left: 3px" onclick="clear_table()">LIMPAR</button>
                 </div>
               </div>
               
@@ -114,7 +116,7 @@
               
                  <!-- ## TABLE OF SEARCH RESULTS ------------------------------------------------ -->
                 <div id="search-results" class="table-responsive-xl" style="margin-left:80px">
-                  <table class="table table-striped" id="table">
+                  <table class="table" style="border-color: gray" id="table">
                     <thead>
                         <tr id="linha1">
                           <th style="width: 110px; color:gold; font-size: 18px; font-family:montserrat, sans-serif" scope="col">FRENTE</th>
@@ -124,6 +126,9 @@
                           <th style="width: 110px; color:gold; font-size: 18px; font-family:montserrat, sans-serif" scope="col">DURAÇÃO</th>
                         </tr>
                     </thead>
+                    <tbody>
+
+                    </tbody>
                   </table>
                 </div>
                 <!-- ## TABLE OF SEARCH RESULTS ~ END ------------------------------------------------ -->
