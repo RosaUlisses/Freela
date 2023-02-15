@@ -55,9 +55,11 @@ async function get_hours_of_study(csv_path, min_relevance) {
     let file_content = CSV_TEXT.split("\n");
     let total_hours = 0;
 
-    file_content.forEach((class_) => {
+    file_content.forEach((line) => {
+        let class_ = construct_class(line); 
         if (!is_class(class_) || class_[RELEVANCE_INDEX] < min_relevance) return;
-        total_hours += get_hours_from_date_string(class_[DURATION_INDEX]);
+        let duration =  get_hours_from_date_string(class_[DURATION_INDEX]);
+        total_hours += duration;
     });
 
     return total_hours;

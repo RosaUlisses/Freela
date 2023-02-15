@@ -44,12 +44,23 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
 async function calculate_min_relevance(sheet, number_of_weeks, hours_per_week) {
     let hours_of_study = number_of_weeks * hours_per_week;
 
-    if (hours_of_study > await get_hours_of_study(sheet, 0)) return 0;
-    if (hours_of_study > await get_hours_of_study(sheet, 1)) return 1;
-    if (hours_of_study > await get_hours_of_study(sheet, 2)) return 2;
-    if (hours_of_study > await get_hours_of_study(sheet, 3)) return 3;
-    if (hours_of_study > await get_hours_of_study(sheet, 4)) return 4;
-    if (hours_of_study > await get_hours_of_study(sheet, 5)) return 5;
+    let total = await get_hours_of_study(sheet, 0);
+    if (hours_of_study > total) return 0;
+
+    total = await get_hours_of_study(sheet, 1);
+    if (hours_of_study > total) return 1;
+
+    total = await get_hours_of_study(sheet, 2);
+    if (hours_of_study > total) return 2;
+
+    total = await get_hours_of_study(sheet, 3);
+    if (hours_of_study > total) return 3;
+
+    total = await get_hours_of_study(sheet, 4);
+    if (hours_of_study > total) return 4;
+
+    total = await get_hours_of_study(sheet, 5);
+    if (hours_of_study > total) return 5;
 }
 
 async function read_data_of_csv_file(path, min_relevance) {
