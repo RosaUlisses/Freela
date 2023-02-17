@@ -35,6 +35,7 @@ function save_study_plan_data(study_plan_data) {
             put_value_in_table_row(table_row, class_.number); 
             put_value_in_table_row(table_row, class_.name); 
             put_value_in_table_row(table_row, class_.duration); 
+            put_value_in_table_row(table_row, class_.relevance); 
             study_plan_table.appendChild(table_row);
         });
     });
