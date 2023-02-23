@@ -35,7 +35,6 @@ function save_study_plan_data(study_plan_data) {
             put_value_in_table_row(table_row, class_.number); 
             put_value_in_table_row(table_row, class_.name); 
             put_value_in_table_row(table_row, class_.duration); 
-            put_value_in_table_row(table_row, class_.relevance); 
             study_plan_table.appendChild(table_row);
         });
     });
@@ -53,11 +52,11 @@ function get_selected_subject() {
     } 
     if (document.getElementById("gridRadios3").checked) {
         document.getElementById("gridRadios3").checked = false;
-        return "Filosofia";
+        return "Sociologia";
     } 
     if (document.getElementById("gridRadios4").checked) {
         document.getElementById("gridRadios4").checked = false;
-        return "Sociologia";
+        return "Filosofia";
     }
 
 }
@@ -91,6 +90,7 @@ function get_number_of_hours_per_week() {
 }
 
 function fill_table() {
+    clear_study_plan();
     let subject = get_selected_subject();
     if(subject == undefined) {
         alert("Escolha uma disciplina.");
