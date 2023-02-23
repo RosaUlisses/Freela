@@ -10,6 +10,7 @@ async function create_plan(subject, number_of_weeks, hours_per_week) {
 
 async function generate_study_plan(csv_path, number_of_weeks, hours_per_week) {
     let study_plan_data = await get_study_plan_data(csv_path, number_of_weeks, hours_per_week);
+    if(study_plan_data == undefined) return undefined;
     format_all_dates_of_the_study_plan(study_plan_data);
     console.log(study_plan_data);
     return study_plan_data;
@@ -19,6 +20,7 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
     let study_plan = []
     CSV_TEXT = undefined;
     let min_relevance = await calculate_min_relevance(csv_path, number_of_weeks, hours_per_week);
+    if(min_relevance == undefined) return undefined;
     let groups = await read_data_of_csv_file(csv_path, min_relevance);
 
     let number_of_groups = groups.size;
@@ -30,6 +32,14 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
             if (group.is_concluded()) return;
             let classes = group.peek_weekly_classes(hours_per_group);
             classes.forEach((class_) => weekly_classes.push(class_));
+        });
+
+        weekly_classes.sort((a, b) => {
+            if (a.relevance > b.relevance) return 1;
+            if (a.relevance < b.relevance) return -1;
+            if (a.number < b.number) return 1;
+            if (a.number > b.number) return -1;
+            return 0;
         });
 
         study_plan.push(weekly_classes);
@@ -61,6 +71,8 @@ async function calculate_min_relevance(sheet, number_of_weeks, hours_per_week) {
 
     total = await get_hours_of_study(sheet, 5);
     if (hours_of_study > total) return 5;
+
+    alert("INPUTS INVÁLIDOS, INSIRA MAIS HORAS DE ESTUDO OU MAIS SEMANAS !!!");
 }
 
 async function read_data_of_csv_file(path, min_relevance) {

@@ -22,6 +22,12 @@ function put_value_in_table_row(table_row, value) {
 }
 
 function save_study_plan_data(study_plan_data) {
+    if(study_plan_data == undefined) {
+        clear_study_plan();
+        clear_inputs();
+        return;
+    }
+
     console.log(study_plan_data);
     let study_plan_table = document.getElementById("table-body");
 
@@ -35,30 +41,25 @@ function save_study_plan_data(study_plan_data) {
             put_value_in_table_row(table_row, class_.number); 
             put_value_in_table_row(table_row, class_.name); 
             put_value_in_table_row(table_row, class_.duration); 
+            put_value_in_table_row(table_row, class_.relevance); 
             study_plan_table.appendChild(table_row);
         });
     });
 }
 
 function get_selected_subject() {
-
     if (document.getElementById("gridRadios1").checked) {
-        document.getElementById("gridRadios1").checked = false;
         return "Geografia";
     }
     if (document.getElementById("gridRadios2").checked) {
-        document.getElementById("gridRadios2").checked = false;
         return "História";
     } 
     if (document.getElementById("gridRadios3").checked) {
-        document.getElementById("gridRadios3").checked = false;
         return "Sociologia";
     } 
     if (document.getElementById("gridRadios4").checked) {
-        document.getElementById("gridRadios4").checked = false;
         return "Filosofia";
     }
-
 }
 
 function get_number_of_weeks() {
@@ -115,7 +116,7 @@ function clear_study_plan() {
     table_title.innerHTML = "";
 
     let study_plan_table = document.getElementById("table-body");
-    while (study_plan_table.childNodes.length > 2) {
+    while (study_plan_table.childNodes.length > 1) {
         study_plan_table.removeChild(study_plan_table.lastElementChild);
     }
 }
