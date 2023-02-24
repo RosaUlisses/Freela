@@ -1,5 +1,13 @@
 let CSV_TEXT = undefined;
 
+function classes_comparition_function(a, b) {
+    if (a.relevance > b.relevance) return 1;
+    if (a.relevance < b.relevance) return -1;
+    if (a.number < b.number) return 1;
+    if (a.number > b.number) return -1;
+    return 0;
+}
+
 function is_valid_date(date) {
     return date instanceof Date && !isNaN(date);
 }

@@ -121,7 +121,7 @@ function clear_study_plan() {
     }
 }
 
-function clear_table() {
+function clear_() {
     clear_study_plan(); 
     clear_inputs();
 }

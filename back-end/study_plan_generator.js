@@ -21,50 +21,34 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
     CSV_TEXT = undefined;
     let min_relevance = await calculate_min_relevance(csv_path, number_of_weeks, hours_per_week);
     if(min_relevance == undefined) return undefined;
-    let [groups, revision] = await read_data_of_csv_file(csv_path, min_relevance);
+    let [regular_groups, revision_groups] = await read_data_of_csv_file(csv_path, min_relevance);
 
-    let number_of_groups = groups.size;
+    let number_of_groups = regular_groups.size;
     let hours_per_group = hours_per_week / number_of_groups;
 
     let i = 0;
-    for (i = 0; i < number_of_weeks; i++) {
-        let weekly_classes = [];
-        groups.forEach((group) => {
-            if (group.is_concluded()) return;
-            let classes = group.peek_weekly_classes(hours_per_group);
-            classes.forEach((class_) => weekly_classes.push(class_));
-        });
-
-        weekly_classes.sort((a, b) => {
-            if (a.relevance > b.relevance) return 1;
-            if (a.relevance < b.relevance) return -1;
-            if (a.number < b.number) return 1;
-            if (a.number > b.number) return -1;
-            return 0;
-        });
-        if(weekly_classes.length == 0) break;
-        study_plan.push(weekly_classes);
-    }
-    
     for (i; i < number_of_weeks; i++) {
         let weekly_classes = [];
-        revision.forEach((group) => {
+        regular_groups.forEach((group) => {
             if (group.is_concluded()) return;
             let classes = group.peek_weekly_classes(hours_per_group);
             classes.forEach((class_) => weekly_classes.push(class_));
         });
+        if(weekly_classes.length == 0) break;
 
-        weekly_classes.sort((a, b) => {
-            if (a.relevance > b.relevance) return 1;
-            if (a.relevance < b.relevance) return -1;
-            if (a.number < b.number) return 1;
-            if (a.number > b.number) return -1;
-            return 0;
-        });
+        weekly_classes.sort(classes_comparition_function);
         study_plan.push(weekly_classes);
     }
-
-    console.log(study_plan);
+    for (i; i < number_of_weeks; i++) {
+        let weekly_classes = [];
+        revision_groups.forEach((group) => {
+            if (group.is_concluded()) return;
+            let classes = group.peek_weekly_classes(hours_per_group);
+            classes.forEach((class_) => weekly_classes.push(class_));
+        });
+        weekly_classes.sort(classes_comparition_function);
+        study_plan.push(weekly_classes);
+    }
 
     return study_plan;
 }
@@ -97,8 +81,8 @@ async function calculate_min_relevance(sheet, number_of_weeks, hours_per_week) {
 async function read_data_of_csv_file(path, min_relevance) {
     await read_file(path);
     let file_content = CSV_TEXT.split("\n");
-    let groups = new Map();
-    let aux = new Map();
+    let regular_groups = new Map();
+    let revision_groups = new Map();
 
     file_content.forEach((line) => {
         line = construct_class(line); 
@@ -107,31 +91,31 @@ async function read_data_of_csv_file(path, min_relevance) {
             let class_ = new Class(line[GROUP_INDEX], line[MODULE_INDEX], 
                 line[NUMBER_INDEX], line[CLASS_NAME_INDEX], line[DURATION_INDEX], line[RELEVANCE_INDEX]);
             let group = class_.group;
-            if (!aux.has(group)) {
-                aux.set(group, new Group());
+            if (!revision_groups.has(group)) {
+                revision_groups.set(group, new Group());
             }
-            aux.get(group).add_class(class_);
+            revision_groups.get(group).add_class(class_);
             return;
         } 
 
         let class_ = new Class(line[GROUP_INDEX], line[MODULE_INDEX], 
             line[NUMBER_INDEX], line[CLASS_NAME_INDEX], line[DURATION_INDEX], line[RELEVANCE_INDEX]);
         let group = class_.group;
-        if (!groups.has(group)) {
-            groups.set(group, new Group());
+        if (!regular_groups.has(group)) {
+            regular_groups.set(group, new Group());
         }
-        groups.get(group).add_class(class_);
+        regular_groups.get(group).add_class(class_);
     });
 
-    groups.forEach((group) => {
+    regular_groups.forEach((group) => {
         group.sort_classes_of_the_modules_by_relevance();
         group.init_modules_sorted_list();
     });
 
-    aux.forEach((group) => {
+    revision_groups.forEach((group) => {
         group.sort_classes_of_the_modules_by_relevance();
         group.init_modules_sorted_list();
     });
 
-    return [groups, aux];
+    return [regular_groups, revision_groups];
 }
