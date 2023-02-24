@@ -21,12 +21,13 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
     CSV_TEXT = undefined;
     let min_relevance = await calculate_min_relevance(csv_path, number_of_weeks, hours_per_week);
     if(min_relevance == undefined) return undefined;
-    let groups = await read_data_of_csv_file(csv_path, min_relevance);
+    let [groups, revision] = await read_data_of_csv_file(csv_path, min_relevance);
 
     let number_of_groups = groups.size;
     let hours_per_group = hours_per_week / number_of_groups;
 
-    for (let i = 0; i < number_of_weeks; i++) {
+    let i = 0;
+    for (i = 0; i < number_of_weeks; i++) {
         let weekly_classes = [];
         groups.forEach((group) => {
             if (group.is_concluded()) return;
@@ -41,7 +42,25 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
             if (a.number > b.number) return -1;
             return 0;
         });
+        if(weekly_classes.length == 0) break;
+        study_plan.push(weekly_classes);
+    }
+    
+    for (i; i < number_of_weeks; i++) {
+        let weekly_classes = [];
+        revision.forEach((group) => {
+            if (group.is_concluded()) return;
+            let classes = group.peek_weekly_classes(hours_per_group);
+            classes.forEach((class_) => weekly_classes.push(class_));
+        });
 
+        weekly_classes.sort((a, b) => {
+            if (a.relevance > b.relevance) return 1;
+            if (a.relevance < b.relevance) return -1;
+            if (a.number < b.number) return 1;
+            if (a.number > b.number) return -1;
+            return 0;
+        });
         study_plan.push(weekly_classes);
     }
 
@@ -79,16 +98,24 @@ async function read_data_of_csv_file(path, min_relevance) {
     await read_file(path);
     let file_content = CSV_TEXT.split("\n");
     let groups = new Map();
+    let aux = new Map();
 
     file_content.forEach((line) => {
         line = construct_class(line); 
-        if (!is_class(line) || line[RELEVANCE_INDEX] < min_relevance) return;
+        if (!is_class(line)) return;
+        if (line[RELEVANCE_INDEX] < min_relevance) {
+            let class_ = new Class(line[GROUP_INDEX], line[MODULE_INDEX], 
+                line[NUMBER_INDEX], line[CLASS_NAME_INDEX], line[DURATION_INDEX], line[RELEVANCE_INDEX]);
+            let group = class_.group;
+            if (!aux.has(group)) {
+                aux.set(group, new Group());
+            }
+            aux.get(group).add_class(class_);
+            return;
+        } 
+
         let class_ = new Class(line[GROUP_INDEX], line[MODULE_INDEX], 
             line[NUMBER_INDEX], line[CLASS_NAME_INDEX], line[DURATION_INDEX], line[RELEVANCE_INDEX]);
-        if(class_.name.includes("Unidades")) {
-            console.log(line);
-            console.log(class_);
-        }    
         let group = class_.group;
         if (!groups.has(group)) {
             groups.set(group, new Group());
@@ -99,7 +126,12 @@ async function read_data_of_csv_file(path, min_relevance) {
     groups.forEach((group) => {
         group.sort_classes_of_the_modules_by_relevance();
         group.init_modules_sorted_list();
-    })
+    });
 
-    return groups;
+    aux.forEach((group) => {
+        group.sort_classes_of_the_modules_by_relevance();
+        group.init_modules_sorted_list();
+    });
+
+    return [groups, aux];
 }
