@@ -36,7 +36,15 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
         });
         if(weekly_classes.length == 0) break;
 
-        weekly_classes.sort(classes_comparition_function);
+        weekly_classes.sort((a, b) => {
+            if (a.group > b.group) return 1;
+            if (a.group < b.group) return -1;
+            if (a.relevance < b.relevance) return 1;
+            if (a.relevance > b.relevance) return -1;
+            if (a.number > b.number) return 1;
+            if (a.number < b.number) return -1;
+            return 0;
+        });
         study_plan.push(weekly_classes);
     }
     for (i; i < number_of_weeks; i++) {
@@ -46,7 +54,15 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
             let classes = group.peek_weekly_classes(hours_per_group);
             classes.forEach((class_) => weekly_classes.push(class_));
         });
-        weekly_classes.sort(classes_comparition_function);
+        weekly_classes.sort((a, b) => {
+            if(a.group > b.group) return 1;
+            if(a.group < b.group) return -1;
+            if (a.relevance > b.relevance) return 1;
+            if (a.relevance < b.relevance) return -1;
+            if (a.number < b.number) return 1;
+            if (a.number > b.number) return -1;
+            return 0;
+        });
         study_plan.push(weekly_classes);
     }
 
