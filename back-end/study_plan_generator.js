@@ -30,9 +30,6 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
     for (i; i < number_of_weeks; i++) {
         let weekly_classes = [];
         regular_groups.forEach((group) => {
-            if(i == 5) {
-                console.log("cheguei");
-            }
             if (group.is_concluded()) return;
             let classes = group.peek_weekly_classes(hours_per_group);
             classes.forEach((class_) => weekly_classes.push(class_));
@@ -42,10 +39,10 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
         weekly_classes.sort((a, b) => {
             if (a.group > b.group) return 1;
             if (a.group < b.group) return -1;
+            if (a.module > b.module) return 1;
+            if (a.module < b.module) return -1;
             if (a.relevance < b.relevance) return 1;
             if (a.relevance > b.relevance) return -1;
-            if (a.number > b.number) return 1;
-            if (a.number < b.number) return -1;
             return 0;
         });
         study_plan.push(weekly_classes);
