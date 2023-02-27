@@ -30,6 +30,9 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
     for (i; i < number_of_weeks; i++) {
         let weekly_classes = [];
         regular_groups.forEach((group) => {
+            if(i == 5) {
+                console.log("cheguei");
+            }
             if (group.is_concluded()) return;
             let classes = group.peek_weekly_classes(hours_per_group);
             classes.forEach((class_) => weekly_classes.push(class_));
