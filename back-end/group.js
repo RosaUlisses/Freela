@@ -49,11 +49,16 @@ class Group {
             if (this.is_concluded()) return weekly_classes;
             let classes = this.modules_sorted_list[last_index].peek_weekly_classes(previewed_workload - current_workload);
             let previous_last_index = last_index;
+            if (this.modules_sorted_list[last_index].is_concluded()) {
+                    this.modules_sorted_list.pop();
+                    last_index--;
+            }
             if (classes.length == 0) {
                 if (this.modules_sorted_list[last_index].is_concluded()) {
                     this.modules_sorted_list.pop();
                     last_index--;
-                } else break;
+                } 
+                else break;
             }
             classes.forEach((class_) => {
                 weekly_classes.push(class_);
