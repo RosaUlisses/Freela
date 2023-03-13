@@ -23,19 +23,32 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
     if(min_relevance == undefined) return undefined;
     let [regular_groups, revision_groups] = await read_data_of_csv_file(csv_path, min_relevance);
 
-    let number_of_groups = regular_groups.size;
-    let hours_per_group = hours_per_week / number_of_groups;
+    let initial_number_of_groups = regular_groups.size;
+    let initial_hours_per_group = hours_per_week / initial_number_of_groups;
+
+    let number_of_groups = initial_number_of_groups;
+    let hours_per_group = initial_hours_per_group;
+
 
     let i = 0;
     for (i; i < number_of_weeks; i++) {
         let weekly_classes = [];
+
+        regular_groups.forEach((group, key) => {
+            if(group.is_concluded()) {
+                regular_groups.delete(key);
+                number_of_groups--;
+                hours_per_group = hours_per_week / number_of_groups;
+            }
+        });
+
         regular_groups.forEach((group) => {
-            if (group.is_concluded()) return;
             let classes = group.peek_weekly_classes(hours_per_group);
             classes.forEach((class_) => weekly_classes.push(class_));
         });
-        if(weekly_classes.length == 0) break;
 
+        if(weekly_classes.length == 0) break;
+         
         weekly_classes.sort((a, b) => {
             if (a.group > b.group) return 1;
             if (a.group < b.group) return -1;
@@ -47,13 +60,26 @@ async function get_study_plan_data(csv_path, number_of_weeks, hours_per_week) {
         });
         study_plan.push(weekly_classes);
     }
+
+    number_of_groups = initial_number_of_groups;
+    hours_per_group = initial_hours_per_group;
+
     for (i; i < number_of_weeks; i++) {
         let weekly_classes = [];
+
+        revision_groups.forEach((group, key) => {
+            if(group.is_concluded()) {
+                regular_groups.delete(key);
+                number_of_groups--;
+                hours_per_group = hours_per_week / number_of_groups;
+            }
+        });
+
         revision_groups.forEach((group) => {
-            if (group.is_concluded()) return;
             let classes = group.peek_weekly_classes(hours_per_group);
             classes.forEach((class_) => weekly_classes.push(class_));
         });
+
         weekly_classes.sort((a, b) => {
             if(a.group > b.group) return 1;
             if(a.group < b.group) return -1;

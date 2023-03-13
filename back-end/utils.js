@@ -62,13 +62,16 @@ async function get_hours_of_study(csv_path, min_relevance) {
     await read_file(csv_path);
     let file_content = CSV_TEXT.split("\n");
     let total_hours = 0;
+    let count = 0;
 
     file_content.forEach((line) => {
         let class_ = construct_class(line); 
         if (!is_class(class_) || class_[RELEVANCE_INDEX] < min_relevance) return;
         let duration =  get_hours_from_date_string(class_[DURATION_INDEX]);
         total_hours += duration;
+        count++;
     });
+    console.log("Numero de aulas -> " + count);
 
     return total_hours;
 }
