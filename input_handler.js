@@ -124,7 +124,3 @@ function clear_() {
     clear_inputs();
 }
 
-
-
-
-
